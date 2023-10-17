@@ -11,64 +11,65 @@ datasource db {
 }
 
 model User {
-  id              String            @id @default(uuid())
-  name            String
-  email           String            @unique
-  password        String
-  role            String
-  contactNo       String
-  address         String
-  profileImg      String
-  reviewAndRating ReviewAndRating[]
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  role       String
+  contactNo  String
+  address    String
+  profileImg String
+  Booking    Booking[]
+  Review     Review[]
 
   @@map("user")
 }
 
-model Category {
-  id    String @id @default(uuid())
-  title String
-  book  Book[]
-
-  @@map("category")
-}
-
-model Book {
-  id              String            @id @default(uuid())
+model Hotel {
+  id              String    @id @default(uuid())
   title           String
-  author          String
-  price           Float
-  genre           String
-  publicationDate String
-  reviewAndRating ReviewAndRating[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @default(now())
+  description     String
+  location        String
+  latitude        Float?
+  longitude       Float?
+  price_per_night Int
+  rating          Float
+  image_url       String[]
+  bedroom         Int
+  bathroom        Int
+  max_guest       Int
+  discount        Int
+  amenities       String[]
+  policy          String[]
+  partner         String
+  Booking         Booking[]
+  Review          Review[]
 
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
-
-  @@map("book")
+  @@map("hotel")
 }
 
-model ReviewAndRating {
-  id     String @id @default(uuid())
-  review String
-  rating Int
+model Booking {
+  id             String   @id @default(uuid())
+  userId         String
+  hotelId        String
+  checkInDate    DateTime
+  checkOutDate   DateTime
+  numberOfGuests Int
+  totalPrice     Int
+  user           User     @relation(fields: [userId], references: [id])
+  hotel          Hotel    @relation(fields: [hotelId], references: [id])
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  book   Book   @relation(fields: [bookId], references: [id])
-  bookId String
-
-  @@map("review_and_rating")
+  @@map("booking")
 }
 
-model Order {
-  id           String   @id @default(uuid())
-  userId       String
-  status       String   @default("pending")
-  orderedBooks Json[]
-  createdAt    DateTime @default(now())
+model Review {
+  id      String  @id @default(uuid())
+  userId  String
+  hotelId String
+  rating  Int
+  comment String?
+  user    User    @relation(fields: [userId], references: [id])
+  hotel   Hotel   @relation(fields: [hotelId], references: [id])
 
-  @@map("order")
+  @@map("review")
 }
