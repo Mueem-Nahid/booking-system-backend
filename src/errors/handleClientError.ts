@@ -24,6 +24,20 @@ const handleClientError = (error: Prisma.PrismaClientKnownRequestError) => {
         },
       ];
     }
+  } else if (error.code === 'P2002') {
+    const constraintMatch = error.message.match(
+      /Unique constraint failed on the (.+)/
+    );
+    if (constraintMatch) {
+      const constraint = constraintMatch[1]; // Extract the constraint name
+      message = `Email already exists.`;
+      errors = [
+        {
+          path: '',
+          message: `Unique constraint '${constraint}' failed`,
+        },
+      ];
+    }
   }
 
   return {

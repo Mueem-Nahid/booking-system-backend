@@ -20,7 +20,6 @@ const createUser = async (data: User): Promise<Partial<User>> => {
       id: true,
       name: true,
       email: true,
-      role: true,
       contactNo: true,
       address: true,
       profileImg: true,

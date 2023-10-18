@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { userRole } from './auth.constants';
 
-const signupZodSchema = z.object({
+const createAdminZodSchema = z.object({
   body: z.object({
     name: z.string({
       required_error: 'Name is required',
@@ -45,7 +45,7 @@ const refreshTokenZodSchema = z.object({
 });
 
 export const AuthValidation = {
-  signupZodSchema,
+  createAdminZodSchema,
   loginZodSchema,
   refreshTokenZodSchema,
 };

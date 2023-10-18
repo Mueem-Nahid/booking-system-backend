@@ -4,8 +4,15 @@ import { UserController } from './user.controller';
 import express, { Router } from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { UserValidation } from './user.validation';
+import { AuthController } from '../auth/auth.controller';
 
 const router: Router = express.Router();
+
+router.post(
+  '/signup',
+  validateRequest(UserValidation.signupUserZodSchema),
+  AuthController.createUser
+);
 
 router.get('/', auth(ENUM_USER_ROLE.ADMIN), UserController.getAllUsers);
 
