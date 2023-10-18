@@ -1,27 +1,19 @@
-import { IGenericErrorMessage } from '../interfaces/error';
+import { Prisma } from '@prisma/client';
 import { IGenericErrorResponse } from '../interfaces/common';
 
 const handleValidationError = (
-  error: { errors: { [s: string]: unknown; } | ArrayLike<unknown>; }
+  error: Prisma.PrismaClientValidationError
 ): IGenericErrorResponse => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const errors: IGenericErrorMessage[] = Object.values(error.errors).map(
-    (el): IGenericErrorMessage => {
-      return {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        path: el?.path,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        message: el?.message,
-      };
-    }
-  );
+  const errors = [
+    {
+      path: '',
+      message: error.message,
+    },
+  ];
   const statusCode = 400;
   return {
     statusCode,
-    message: 'Validation error',
+    message: 'Validation Error',
     errorMessages: errors,
   };
 };

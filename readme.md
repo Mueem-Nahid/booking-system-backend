@@ -1,6 +1,6 @@
 ## Hotel Booking System Server (PostgreSQL, Prisma)
 
-## Live Link:  [https://book-catalogue-server-postgres-prisma.vercel.app/api/v1](https://book-catalogue-server-postgres-prisma.vercel.app/api/v1)
+## Live Link: [https://book-catalogue-server-postgres-prisma.vercel.app/api/v1](https://book-catalogue-server-postgres-prisma.vercel.app/api/v1)
 
 ### Application Routes:
 
